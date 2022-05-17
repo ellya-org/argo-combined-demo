@@ -68,6 +68,3 @@ spec:
       volumeMounts:
       - name: github-access
         mountPath: /.github/
-
-
-dctellya/argo-combined-app:e4b2a6710a2edc699e0b6f5c46dc02371849fb3a
