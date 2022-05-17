@@ -62,7 +62,7 @@ spec:
         cat $PROMOTE_FILE
         echo AFTER: 
         echo "-----------------------------------------------------------------------"
-        cat $PROMOTE_FILE | sed -e "s@- $IMAGE:.*@- $IMAGE:$IMAGE_TAG_NEW@g" | tee $PROMOTE_FILE
+        cat $PROMOTE_FILE | sed -e "s@- $IMAGE:.*@- $IMAGE:$IMAGE_TAG@g" | tee $PROMOTE_FILE
         echo "-----------------------------------------------------------------------"
         cat $PROMOTE_FILE
         echo "-----------------------------------------------------------------------"
