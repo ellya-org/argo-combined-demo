@@ -63,7 +63,9 @@ spec:
         echo AFTER: 
         echo "-----------------------------------------------------------------------"
         sed -i -e "s@- $IMAGE:.*@- $IMAGE:$IMAGE_TAG_NEW@g" $PROMOTE_FILE
-        rm $PROMOTE_FILE-e
+        if [ -f "$PROMOTE_FILE-e" ]; then
+          rm $PROMOTE_FILE-e
+        fi
         echo "-----------------------------------------------------------------------"
         cat $PROMOTE_FILE
         echo "-----------------------------------------------------------------------"
