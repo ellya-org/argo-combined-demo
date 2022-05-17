@@ -13,7 +13,7 @@ spec:
     targetRevision: HEAD
     kustomize:
       images:
-      - dctellya/argo-combined-app:cf8c8aec7b42bdb0e81ca5c6f8001d2a68181ade
+      - dctellya/argo-combined-app:d9c06635bb807e25cd471bf9f284b2e639330f0a
   destination:
     server: https://kubernetes.default.svc
     namespace: production
