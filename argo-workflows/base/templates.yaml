@@ -58,7 +58,7 @@ spec:
         echo BEFORE:
         cat {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
         echo AFTER: 
-        sed -i "s/- {{inputs.parameters.image_owner}}//{{inputs.parameters.image_name}}:.*/- {{inputs.parameters.image_owner}}//{{inputs.parameters.image_name}}:{{inputs.parameters.tag}}/g" {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        sed -e "s@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:.*@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:{{inputs.parameters.tag}}@g" {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
         cat {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
         git config user.name "$(cat /.github/user)"
         git config user.email "$(cat /.github/email)"
@@ -68,3 +68,6 @@ spec:
       volumeMounts:
       - name: github-access
         mountPath: /.github/
+
+
+dctellya/argo-combined-app:e4b2a6710a2edc699e0b6f5c46dc02371849fb3a
