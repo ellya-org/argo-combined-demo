@@ -58,8 +58,11 @@ spec:
         echo BEFORE:
         cat {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
         echo AFTER: 
-        sed -e "s@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:.*@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:{{inputs.parameters.tag}}@g" {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        echo "-----------------------------------------------------------------------"
+        sed -e "s@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:.*@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:{{inputs.parameters.tag}}@g" {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml > {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        echo "-----------------------------------------------------------------------"
         cat {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        echo "-----------------------------------------------------------------------"
         git config user.name "$(cat /.github/user)"
         git config user.email "$(cat /.github/email)"
         git add {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
