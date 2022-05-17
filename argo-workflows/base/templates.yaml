@@ -50,6 +50,7 @@ spec:
       command: [sh]
       source: |
         set -e
+        echo "cloning repo: github.com/{{inputs.parameters.repo_owner}}/{{inputs.parameters.repo_name}}"
         git clone https://$(cat /.github/token)@github.com/{{inputs.parameters.repo_owner}}/{{inputs.parameters.repo_name}}
         cd {{inputs.parameters.repo_name}}
         sleep 2
