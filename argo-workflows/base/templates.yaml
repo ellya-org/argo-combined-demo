@@ -56,12 +56,15 @@ spec:
         cd {{inputs.parameters.repo_name}}
         sleep 2
         echo BEFORE:
-        cat {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        export PROMOTE_FILE={{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        export IMAGE={{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}
+        export IMAGE_TAG={{inputs.parameters.tag}}
+        cat $PROMOTE_FILE
         echo AFTER: 
         echo "-----------------------------------------------------------------------"
-        sed -e "s@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:.*@- {{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}:{{inputs.parameters.tag}}@g" {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml > {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        cat $PROMOTE_FILE | sed -e "s@- $IMAGE:.*@- $IMAGE:$IMAGE_TAG_NEW@g" | tee $PROMOTE_FILE
         echo "-----------------------------------------------------------------------"
-        cat {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+        cat $PROMOTE_FILE
         echo "-----------------------------------------------------------------------"
         git config user.name "$(cat /.github/user)"
         git config user.email "$(cat /.github/email)"
