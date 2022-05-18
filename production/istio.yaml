@@ -13,8 +13,6 @@ spec:
     targetRevision: 1.13.4
     helm:
       values: |
-        hub: gcr.io/istio-release
-        tag: 1.13.4
         pilot:
           image:gcr.io/istio-release/pilot:1.13.4
   destination:

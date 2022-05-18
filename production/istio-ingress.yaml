@@ -12,9 +12,7 @@ spec:
     repoURL: https://github.com/istio/istio.git
     targetRevision: 1.13.4
     helm:
-      values: |
-        hub: gcr.io/istio-release
-        tag: 1.13.4
+      values: |∫
         global:
           proxy:
             image:gcr.io/istio-release/proxyv2:1.13.4
