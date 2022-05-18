@@ -11,6 +11,10 @@ spec:
     path: manifests/charts/base
     repoURL: https://github.com/istio/istio.git
     targetRevision: 1.13.4
+    helm:
+      values: |
+        hub: gcr.io/istio-release
+        tag: 1.13.4
   destination:
     namespace: istio-system
     server: https://kubernetes.default.svc
