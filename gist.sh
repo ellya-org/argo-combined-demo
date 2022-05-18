@@ -1,5 +1,8 @@
 # Source: https://gist.github.com/48f44d3974db698d3127f52b6e7cd0d3
 
+# Install argo plugins
+brew install argoproj/tap/kubectl-argo-rollouts
+brew install argo
 ###########################################################
 # Automation of Everything                                #
 # How To Combine Argo Events, Workflows, CD, and Rollouts #
