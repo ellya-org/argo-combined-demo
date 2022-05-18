@@ -15,6 +15,9 @@ spec:
       values: |
         hub: gcr.io/istio-release
         tag: 1.13.4
+        global:
+          proxy:
+            image:gcr.io/istio-release/proxyv2:1.13.4
   destination:
     namespace: istio-system
     server: https://kubernetes.default.svc

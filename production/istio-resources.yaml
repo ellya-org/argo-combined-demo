@@ -14,7 +14,7 @@ spec:
     helm:
       values: |
         hub: gcr.io/istio-release
-        tag: 1.13.4
+        tag: 1.13.4    
   destination:
     namespace: istio-system
     server: https://kubernetes.default.svc
