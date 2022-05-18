@@ -260,6 +260,12 @@ git add .
 git commit -m "A silly change"
 
 git push
+###################
+# Argo workflows #
+###################
+
+SECRET=$(kubectl get sa argo-workflows-server -n argo -o=jsonpath='{.secrets[0].name}')
+ARGO_TOKEN="Bearer $(kubectl get secret $SECRET -n argo -o=jsonpath='{.data.token}' | base64 --decode)"
 
 ###################
 # GitOps upgrades #
