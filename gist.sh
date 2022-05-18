@@ -223,6 +223,8 @@ cat argo-events/overlays/production/sensors.yaml
 
 #######################
 # if local dev
+k port-forward svc/github-eventsource-svc -n argo-events 8080:12000
+
 ssh-keygen -t rsa -b 2048
 export LHR_KEY_ID=lhr_id_rsa
 ssh -i ~/.ssh/$LHR_KEY_ID -R 80:webhook.192.168.0.42.nip.io:8080 localhost.run
