@@ -15,7 +15,7 @@ spec:
       values: |
         global:
           proxy:
-            image:gcr.io/istio-release/proxyv2:1.13.4
+            image: gcr.io/istio-release/proxyv2:1.13.4
   destination:
     namespace: istio-system
     server: https://kubernetes.default.svc
