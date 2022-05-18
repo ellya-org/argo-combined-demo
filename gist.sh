@@ -286,4 +286,4 @@ kubectl argo rollouts \
     get rollout argo-combined-app \
     --watch
 
-open http://argo-combined-app.$BASE_HOST.nip.io
+open http://argo-combined-app.$BASE_HOST
