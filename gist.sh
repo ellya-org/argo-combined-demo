@@ -227,7 +227,7 @@ k port-forward svc/github-eventsource-svc -n argo-events 8080:12000
 
 ssh-keygen -t rsa -b 2048
 export LHR_KEY_ID=lhr_id_rsa
-ssh -i ~/.ssh/$LHR_KEY_ID -R 80:webhook.192.168.1.45.nip.io:8080 localhost.run
+ssh -i ~/.ssh/$LHR_KEY_ID -R 80:webhook.192.168.1.35.nip.io:8080 localhost.run
 open https://github.com/$GH_ORG/argo-combined-app/settings/hooks
 #change the hook to:
 <localhost.run.fqdn>/argo-combined-app
