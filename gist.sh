@@ -201,7 +201,7 @@ echo $PASS
 
 #use admin / $PASS to login to ArgoCD UI
 
-open http://argo-cd.$BASE_HOST
+open http://argo-cd.$BASE_HOST:$INGRESS_CONTROLLER_PORT
 
 # Use `admin` as the user and `admin123` as the password
 
