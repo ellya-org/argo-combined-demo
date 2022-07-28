@@ -8,7 +8,7 @@ metadata:
 spec:
   project: production
   source:
-    path: argo-rollouts/base
+    path: argo-rollouts/production
     repoURL: https://github.com/ellya-org/argo-combined-demo
     targetRevision: HEAD
   destination:
