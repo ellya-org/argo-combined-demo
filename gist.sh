@@ -227,7 +227,7 @@ k port-forward svc/github-eventsource-svc -n argo-events 8080:12000
 
 ssh-keygen -t rsa -b 2048
 export LHR_KEY_ID=lhr_id_rsa
-ssh -i ~/.ssh/$LHR_KEY_ID -R 80:webhook.192.168.1.35.nip.io:8080 localhost.run
+ssh -i ~/.ssh/$LHR_KEY_ID -R 80:localhost:8080 localhost.run
 open https://github.com/$GH_ORG/argo-combined-app/settings/hooks
 #change the hook to:
 <localhost.run.fqdn>/argo-combined-app
@@ -265,7 +265,9 @@ git push
 ###################
 # Argo workflows #
 ###################
-
+# IF kubernetes > 1.24
+ARGO_TOKEN="Bearer $(kubectl create token argo-workflows-server -n argo)"
+#else
 SECRET=$(kubectl get sa argo-workflows-server -n argo -o=jsonpath='{.secrets[0].name}')
 ARGO_TOKEN="Bearer $(kubectl get secret $SECRET -n argo -o=jsonpath='{.data.token}' | base64 --decode)"
 
