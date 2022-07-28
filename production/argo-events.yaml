@@ -10,7 +10,8 @@ spec:
   source:
     path: charts/argo-events
     repoURL: https://github.com/argoproj/argo-helm.git
-    targetRevision: argo-events-1.13.0
+    targetRevision: HEAD
+    #targetRevision: argo-events-1.13.0
   destination:
     namespace: argo-events
     server: https://kubernetes.default.svc

@@ -184,7 +184,11 @@ cd argo-combined-demo
 ls -1 production/
 
 # cat production/argo-cd.yaml
+# If first time
 helm repo add argo https://argoproj.github.io/argo-helm
+#else
+helm repo update argo
+#
 helm upgrade --install argocd argo/argo-cd --namespace argocd --create-namespace --set server.ingress.hosts="{argo-cd.$BASE_HOST}" --set server.ingress.enabled=true --set server.extraArgs="{--insecure}" --set controller.args.appResyncPeriod=30 --set server.ingress.ingressClassName=nginx --wait
 
 kubectl --namespace argocd \
