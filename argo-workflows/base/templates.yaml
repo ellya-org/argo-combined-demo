@@ -74,7 +74,7 @@ spec:
         git add {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
         git commit -m "Upgraded {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml with the tag {{inputs.parameters.tag}}"
         git push
-        curl -Lk http://argo-server.argocd.svc.cluster.local/api/v1/applications/staging
+        curl -Lk http://argo-workflows.192.168.1.35.nip.io:8080/api/v1/applications/staging
       volumeMounts:
       - name: github-access
         mountPath: /.github/
