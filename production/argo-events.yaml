@@ -10,7 +10,7 @@ spec:
   source:
     path: charts/argo-events
     repoURL: https://github.com/argoproj/argo-helm.git
-    targetRevision: argo-events-2.0.3
+    targetRevision: argo-events-2.0.2
     #targetRevision: argo-events-1.13.0
   destination:
     namespace: argo-events
