@@ -108,6 +108,14 @@ rules:
 - apiGroups:
   - argoproj.io
   resources:
+  - workflows
+  - workflows/finalizers
+  - workflowtemplates
+  - workflowtemplates/finalizers
+  - cronworkflows
+  - cronworkflows/finalizers
+  - clusterworkflowtemplates
+  - clusterworkflowtemplates/finalizers
   - sensors
   - sensors/finalizers
   - sensors/status
@@ -169,3 +177,5 @@ subjects:
 - kind: ServiceAccount
   name: argo-events-sa
   namespace: argo-events
+
+---
