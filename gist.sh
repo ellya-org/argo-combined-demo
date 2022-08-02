@@ -3,6 +3,7 @@
 # Install argo plugins
 brew install argoproj/tap/kubectl-argo-rollouts
 brew install argo
+brew install argocd
 ###########################################################
 # Automation of Everything                                #
 # How To Combine Argo Events, Workflows, CD, and Rollouts #
@@ -207,6 +208,21 @@ echo $PASS
 
 open http://argo-cd.$BASE_HOST:$INGRESS_CONTROLLER_PORT
 
+# Setup argo workflows secret to use argocd api
+
+echo "apiVersion: v1
+kind: Secret
+metadata:
+  name: github-access
+  namespace: workflows
+type: Opaque
+data:
+  token: $(echo -n $GH_TOKEN | base64)
+  user: $(echo -n $GH_ORG | base64)
+  email: $(echo -n $GH_EMAIL | base64)" \
+    | kubeseal --format yaml \
+    | tee argo-workflows/overlays/workflows/githubcred.yaml
+
 # Use `admin` as the user and `admin123` as the password
 
 cat project.yaml
@@ -238,7 +254,7 @@ lt --port 8081
 #######################
 # if local dev
 k port-forward svc/github-eventsource-svc -n argo-events 8080:12000
-lt --port 8081
+lt --port 8080
 #change the hook to:
 <localhosttunnel.fqdn>/argo-combined-app
 #######################
