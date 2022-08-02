@@ -4,4 +4,3 @@ metadata:
   name: argocd-cm
 data:
   accounts.workflowsa: apiKey, login
-  

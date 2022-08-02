@@ -2,6 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-patchesStrategicMerge:
-- cm.yaml
+configMapGenerator:
+- name: argocd-cm
+  behavior: merge
+  literals:
+    - accounts.workflowsa="apiKey, login"
 namespace: argocd
