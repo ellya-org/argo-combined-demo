@@ -5,6 +5,7 @@ resources:
 configMapGenerator:
 - name: argocd-cm
   behavior: merge
+  namespace: argocd
   literals:
     - accounts.workflowsa="apiKey, login"
 namespace: argocd
