@@ -224,17 +224,23 @@ kubectl apply --filename apps.yaml
 cat argo-events/overlays/production/event-sources.yaml
 
 cat argo-events/overlays/production/sensors.yaml
+####################
+# If you want to use webhooks to kickoff argocd sync
+#######################
+# if local dev
+k port-forward svc/argocd-server -n argocd 8081:80
+#### If you haven't
+npm install -g localtunnel
+lt --port 8081
+#then in github
+<localhosttunnel.fqdn>/api/webhook
 
 #######################
 # if local dev
 k port-forward svc/github-eventsource-svc -n argo-events 8080:12000
-
-ssh-keygen -t rsa -b 2048
-export LHR_KEY_ID=lhr_id_rsa
-ssh -i ~/.ssh/$LHR_KEY_ID -R 80:localhost:8080 localhost.run
-open https://github.com/$GH_ORG/argo-combined-app/settings/hooks
+lt --port 8081
 #change the hook to:
-<localhost.run.fqdn>/argo-combined-app
+<localhosttunnel.fqdn>/argo-combined-app
 #######################
 # else
 open https://github.com/$GH_ORG/argo-combined-app/settings/hooks
