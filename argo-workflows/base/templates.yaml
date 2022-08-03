@@ -80,16 +80,18 @@ spec:
         echo $JSON
         TOKEN=$(curl -Lk http://argocd-server.argocd/api/v1/session -d "$JSON" | jq -r ".token")
         echo $TOKEN
-        for (( i=0; i<6; i++ ))
+        i=0
+        while [ i < 6 ]
         do 
             STATUS=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.status")
             HEALTH=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.health.status")
             REV=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.revision")
             echo "status: $STATUS, health: $HEALTH, rev: $REV, tag: $IMAGE_TAG"
             if [[ "$STATUS" = "Synced" ]] && [[ "$HEALTH" = "Healthy" ]] && [[ "$IMAGE_TAG" = "$REV" ]] then
-            exit 0
+                exit 0
             fi
             sleep 10
+            ((i++))
         done
         exit 1
       volumeMounts:
