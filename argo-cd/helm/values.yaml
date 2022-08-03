@@ -1,0 +1,17 @@
+server:
+  config:
+    accounts.adminsa: apiKey, login
+    accounts.adminsa.enabled: "true"
+    accounts.workflowsa: apiKey, login
+    accounts.workflowsa.enabled: "true"
+  rbacConfig:
+    policy.csv: |
+      p, role:org-admin, applications, *, */*, allow
+      p, role:org-admin, clusters, get, *, allow
+      p, role:org-admin, repositories, get, *, allow
+      p, role:org-admin, repositories, create, *, allow
+      p, role:org-admin, repositories, update, *, allow
+      p, role:org-admin, repositories, delete, *, allow
+      g, adminsa, role:org-admin
+      g, workflowsa, role:org-admin
+    policy.default: role:''

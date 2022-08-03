@@ -190,7 +190,15 @@ helm repo add argo https://argoproj.github.io/argo-helm
 #else
 helm repo update argo
 #
-helm upgrade --install argocd argo/argo-cd --namespace argocd --create-namespace --set server.ingress.hosts="{argo-cd.$BASE_HOST}" --set server.ingress.enabled=true --set server.extraArgs="{--insecure}" --set controller.args.appResyncPeriod=30 --set server.ingress.ingressClassName=nginx --wait
+helm upgrade --install argocd argo/argo-cd \
+    --namespace argocd --create-namespace \
+    -f argo-cd/helm/values.yaml \
+    --set server.ingress.hosts="{argo-cd.$BASE_HOST}" \
+    --set server.ingress.enabled=true \
+    --set server.extraArgs="{--insecure}" \
+    --set controller.args.appResyncPeriod=30 \
+    --set server.ingress.ingressClassName=nginx \
+    --wait
 
 kubectl --namespace argocd \
     rollout status \
