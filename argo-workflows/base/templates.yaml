@@ -78,9 +78,7 @@ spec:
         COMMIT_HASH=$(git rev-parse HEAD)
         # Checks
         JSON=$(jq -c -n --arg username "$(cat /.argocd/user)" --arg password "$(cat /.argocd/password)" '$ARGS.named')
-        echo $JSON
         TOKEN=$(curl -Lk http://argocd-server.argocd/api/v1/session -d "$JSON" | jq -r ".token")
-        echo $TOKEN
         i=0
         while [ $i -lt 6 ]
         do 
