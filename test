@@ -1,1 +1,43 @@
-ddd
+#!/bin/bash
+set -e
+echo "cloning repo: github.com/{{inputs.parameters.repo_owner}}/{{inputs.parameters.repo_name}}"
+git clone https://$(cat /.github/token)@github.com/{{inputs.parameters.repo_owner}}/{{inputs.parameters.repo_name}}
+ls -pal {{inputs.parameters.repo_name}}
+cd {{inputs.parameters.repo_name}}
+sleep 2
+echo BEFORE:
+export PROMOTE_FILE={{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+export IMAGE={{inputs.parameters.image_owner}}/{{inputs.parameters.image_name}}
+export IMAGE_TAG={{inputs.parameters.tag}}
+cat $PROMOTE_FILE
+echo AFTER: 
+echo "-----------------------------------------------------------------------"
+sed -i -e "s@- $IMAGE:.*@- $IMAGE:$IMAGE_TAG@g" $PROMOTE_FILE
+if [ -f "$PROMOTE_FILE-e" ]; then
+    rm $PROMOTE_FILE-e
+fi
+echo "-----------------------------------------------------------------------"
+cat $PROMOTE_FILE
+echo "-----------------------------------------------------------------------"
+git config user.name "$(cat /.github/user)"
+git config user.email "$(cat /.github/email)"
+git add {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
+git commit -m "Upgraded {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml with the tag {{inputs.parameters.tag}}"
+git push
+# Checks
+JSON=$(jq -c -n --arg username "$(cat /.argocd/user)" --arg password "$(cat /.argocd/password)" '$ARGS.named')
+echo $JSON
+TOKEN=$(curl -Lk http://argocd-server.argocd/api/v1/session -d "$JSON" | jq -r ".token")
+echo $TOKEN
+for (( i=0; i<6; i++ ))
+do 
+    STATUS=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.status")
+    HEALTH=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.health.status")
+    REV=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.revision")
+    echo "status: $STATUS, health: $HEALTH, rev: $REV, tag: $IMAGE_TAG"
+    if [[ "$STATUS" = "Synced" ]] && [[ "$HEALTH" = "Healthy" ]] && [[ "$IMAGE_TAG" = "$REV" ]] then
+    exit 0
+    fi
+    sleep 10
+done
+exit 1
