@@ -75,6 +75,7 @@ spec:
         git add {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml
         git commit -m "Upgraded {{inputs.parameters.environment}}/{{inputs.parameters.image_name}}.yaml with the tag {{inputs.parameters.tag}}"
         git push
+        COMMIT_HASH=$(git rev-parse HEAD)
         # Checks
         JSON=$(jq -c -n --arg username "$(cat /.argocd/user)" --arg password "$(cat /.argocd/password)" '$ARGS.named')
         echo $JSON
@@ -86,8 +87,8 @@ spec:
             STATUS=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.status")
             HEALTH=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.health.status")
             REV=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.revision")
-            echo "status: $STATUS, health: $HEALTH, rev: $REV, tag: $IMAGE_TAG"
-            if [[ "$STATUS" = "Synced" ]] && [[ "$HEALTH" = "Healthy" ]] && [[ "$IMAGE_TAG" = "$REV" ]]; then
+            echo "status: $STATUS, health: $HEALTH, rev: $REV, commit-hash: $COMMIT_HASH"
+            if [[ "$STATUS" = "Synced" ]] && [[ "$HEALTH" = "Healthy" ]] && [[ "$COMMIT_HASH" = "$REV" ]]; then
                 exit 0
             fi
             sleep 10
