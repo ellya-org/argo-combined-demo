@@ -81,7 +81,7 @@ spec:
         TOKEN=$(curl -Lk http://argocd-server.argocd/api/v1/session -d "$JSON" | jq -r ".token")
         echo $TOKEN
         i=0
-        while [ i < 6 ]
+        while [ $i -lt 6 ]
         do 
             STATUS=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.status")
             HEALTH=$(curl -Lk http://argocd-server.argocd/api/v1/applications/staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.health.status")
