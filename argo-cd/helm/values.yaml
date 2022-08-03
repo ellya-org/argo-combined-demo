@@ -2,7 +2,7 @@ server:
   config:
     accounts.adminsa: apiKey, login
     accounts.adminsa.enabled: "true"
-    accounts.workflowsa: apiKey, login
+    accounts.workflowsa: apiKey
     accounts.workflowsa.enabled: "true"
   rbacConfig:
     policy.csv: |
@@ -18,3 +18,12 @@ server:
       g, adminsa, role:org-admin
       g, workflowsa, role:org-read
     policy.default: role:''
+configs:
+  secret:
+    extra:
+      accounts.adminsa.password: $2a$10$ZVs/AE1OBqfM1Z.2zUdRWeOvb.qAu1NfQibmknh3z1TaR1wl/Xixm
+      accounts.adminsa.passwordMtime: 2022-08-02T12:55:45Z
+      accounts.adminsa.tokens: "null"
+      accounts.workflowsa.password: $2a$10$uLLoQVOYE25ZkLzsDQag4uJYIY/Nkki.iEfwBz4.AjXmWyHBsBCPS
+      accounts.workflowsa.passwordMtime: 2022-08-02T12:55:45Z
+      accounts.workflowsa.tokens: "null"

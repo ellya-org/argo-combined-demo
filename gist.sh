@@ -168,6 +168,19 @@ data:
     | kubeseal --format yaml \
     | tee argo-events/overlays/production/githubcred.yaml
 
+# secret for workflows access to argocd
+echo "apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-access
+  namespace: workflows
+type: Opaque
+data:
+  password: $(echo -n $ARGOCD_WF_PASS | base64)
+  user: $(echo -n $ARGOCD_WF_USER | base64)" \
+    | kubeseal --format yaml \
+    | tee argo-workflows/overlays/workflows/argocdcred.yaml
+
 git add .
 
 git commit -m "Manifests"

@@ -46,6 +46,14 @@ spec:
                       path: user
                     - key: email
                       path: email
+              - name: argocd-access
+                secret:
+                  secretName: argocd-access
+                  items:
+                    - key: user
+                      path: user
+                    - key: password
+                      path: password
               templates:
               - name: build
                 dag:
@@ -69,8 +77,8 @@ spec:
                         value: ""
                   - name: promote-staging
                     templateRef:
-                      name: promote
-                      template: promote
+                      name: promote-stg
+                      template: promote-stg
                       clusterScope: true
                     arguments:
                       parameters:
@@ -90,8 +98,8 @@ spec:
                     - build
                   - name: promote-production
                     templateRef:
-                      name: promote
-                      template: promote
+                      name: promote-prod
+                      template: promote-prod
                       clusterScope: true
                     arguments:
                       parameters:
