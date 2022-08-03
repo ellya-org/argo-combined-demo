@@ -12,6 +12,9 @@ server:
       p, role:org-admin, repositories, create, *, allow
       p, role:org-admin, repositories, update, *, allow
       p, role:org-admin, repositories, delete, *, allow
+      p, role:org-read, applications, *, get, allow
+      p, role:org-read, clusters, get, *, allow
+      p, role:org-read, repositories, get, *, allow
       g, adminsa, role:org-admin
-      g, workflowsa, role:org-admin
+      g, workflowsa, role:org-read
     policy.default: role:''
