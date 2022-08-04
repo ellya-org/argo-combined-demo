@@ -2,7 +2,7 @@ server:
   config:
     accounts.adminsa: apiKey, login
     accounts.adminsa.enabled: "true"
-    accounts.workflowsa: apiKey
+    accounts.workflowsa: apiKey, login
     accounts.workflowsa.enabled: "true"
   rbacConfig:
     policy.csv: |
