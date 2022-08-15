@@ -86,7 +86,7 @@ spec:
             HEALTH=$(curl -Lk http://argocd-server.argocd/api/v1/applications/argo-combined-app-staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.health.status")
             REV=$(curl -Lk http://argocd-server.argocd/api/v1/applications/argo-combined-app-staging -H "Authorization: Bearer $TOKEN" | jq -r ".status.sync.revision")
             echo "status: $STATUS, health: $HEALTH, rev: $REV, commit-hash: $IMAGE_TAG"
-            if [[ "$STATUS" = "Synced" ]] && [[ "$HEALTH" = "Healthy" ]] && [[ "$COMMIT_HASH" = "$IMAGE_TAG" ]]; then
+            if [[ "$STATUS" = "Synced" ]] && [[ "$HEALTH" = "Healthy" ]] && [[ "$REV" = "$IMAGE_TAG" ]]; then
                 exit 0
             fi
             sleep 10
